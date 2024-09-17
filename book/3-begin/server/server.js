@@ -46,11 +46,9 @@ app.prepare().then(() => {
 
   // this is test code, it will be removed by the end of Chapter 3
   server.get('/', async (req, res) => {
-    req.session.foo = 'bar';
-
     const user = JSON.stringify(await User.findOne({ slug: 'team-builder-book' }));
-
-    app.render(req, res, '/', { user });
+    req.user = user;
+    app.render(req, res, '/');
   });
 
   server.get('*', (req, res) => handle(req, res));
